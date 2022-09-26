@@ -40,28 +40,33 @@ ping 10.192.1.1
 Anschließend klonen wir das Git Repository, welches für diese Anleitung vorbereitet wurde.
 
 ```bash
-git clone https://...
+git clone https://github.com/andrekloster/boilerplate.git
 ```
 
-In diesem Repository ist folgendes zu finden.
+In diesem Repository befindet sich das Verzeichnis `bind9`, welches eine Vorlage für unsere Ansible Role zur Verfügung stellt.
 
 ```
-.
-└── dns
-    ├── handlers
-    │   └── main.yaml
-    ├── tasks
-    │   └── main.yaml
-    ├── templates
-    │   └── etc
-    │       └── bind
-    │           ├── named.conf.local
-    │           ├── named.conf.options
-    │           └── zones
-    │               ├── 1.192.10.in-addr.arpa
-    │               └── test.local
-    └── vars
-        └── main.yaml
+boilerplate
+├── README.md
+└── bind9
+    ├── dns.yaml
+    ├── inventory
+    └── roles
+        └── dns
+            ├── handlers
+            │   └── main.yaml
+            ├── tasks
+            │   └── main.yaml
+            ├── templates
+            │   └── etc
+            │       └── bind
+            │           ├── named.conf.local
+            │           ├── named.conf.options
+            │           └── zones
+            │               ├── 1.192.10.in-addr.arpa
+            │               └── test.local
+            └── vars
+                └── main.yaml
 ```
 
 ### Stammverzeichnis ###
@@ -76,7 +81,7 @@ In diesem Repository ist folgendes zu finden.
     - dns
 ```
 
-Das ist unser Ansible Playbook. Dieses Playbook gibt uns mit sudo privilegierte Rechte und führt auf dem DNS Server unsere Ansible `dns` role aus.
+Das ist unser Ansible Playbook. Dieses Playbook führt mit privilegierte Rechten auf dem DNS Server unsere Ansible `dns` role aus.
 
 **inventory**
 
@@ -300,7 +305,7 @@ zones:
         ansible: ["2"]
 ```
 
-Diese YAML ist die wichtigste Konfigurationsdatei. Alle DNS Records werden ausschließlich hier definiert. Anschließend werden mit Hilfe von Ansible die Templates mit dem Inhalt dieser YAML befüllt und geltend gemacht.
+Diese YAML ist die wichtigste Konfigurationsdatei. Alle DNS Records werden ausschließlich hier definiert. Ansible gibt somit den Varibalen innerhalb der Templates ihre Werte.
 
 ## Durchführung
 
