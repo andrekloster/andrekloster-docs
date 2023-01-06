@@ -1,17 +1,39 @@
 site_name: Dokumentation
+site_description: Die IT Dokumentation von André Kloster
+site_author: André Kloster
+repo_url: https://github.com/andrekloster/boilerplate/
+repo_name: andrekloster/boilerplate
 theme:
-  name: material
-  language: de
-
-
+    name: 'material'
+    language: de
+    features:
+        - navigation.tabs
+        - navigation.tabs.sticky
+        - navigation.expand
+        - navigation.indexes
+    plugins:
+        - search:
+            lang: de
 markdown_extensions:
-  - 'admonition'
-  - 'pymdownx.highlight'
-  - 'pymdownx.keys'
-  - 'pymdownx.superfences'
-  - 'pymdownx.tabbed'
-
+    - 'admonition'
+    - 'pymdownx.highlight'
+    - 'pymdownx.keys'
+    - 'pymdownx.superfences'
+    - pymdownx.tabbed:
+        alternate_style: true
+    - 'attr_list'
+    - pymdownx.emoji:
+        emoji_index: !!python/name:materialx.emoji.twemoji
+        emoji_generator: !!python/name:materialx.emoji.to_svg
+    - 'md_in_html'
 nav:
-  - Home: 'index.md'
-  - DNS: 'dns.md'
-
+    - Home:
+        - 'index.md'
+    - IaC:
+        - Puppet:
+            - 'iac/puppet/index.md'
+            - 'iac/puppet/create_puppet_server.md'
+            - 'iac/puppet/simple_module.md'
+        - Ansible:
+            - 'iac/ansible/index.md'
+            - 'iac/ansible/dns.md'

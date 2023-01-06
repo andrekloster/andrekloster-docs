@@ -1,4 +1,6 @@
-# Lokaler DNS Server mit Bind9 und Ansible
+# Lokaler DNS Server mit Bind9 erstellen
+
+[TOC]
 
 ## Ziel
 
@@ -8,7 +10,7 @@ Am Ende dieser Anleitung wird es möglich sein mit nur einer YAML Datei alle not
 
 ## Voraussetzungen
 
-Zur Einrichtung des DNS wird ein Server mit Debian benötigt. Zusätzlich brauchen wir eine Maschine auf der Ansible installiert ist.
+Zur Einrichtung des DNS wird ein Linux Server mit z.Bsp. Debian benötigt. Zusätzlich brauchen wir eine Maschine auf der Ansible installiert ist.
 Beide Rechner müssen sich über ein Netzwerk erreichen können und wir müssen aufpassen, dass der Port 53 (TCP/UDP) nicht von einer Firewall blockiert wird.
 Abschließend erfinden wir eine Domain, die zukünftig in unserem Netzwerk gelten soll.
 
@@ -19,13 +21,18 @@ test.local
 # IPv4 CIDR
 10.192.1.0/24
 
+# IPv6 CIDR
+fd4b:7618:f5ec:798d::/64
+
 # DNS Server
 - Hostname: dns.test.local
-- IP: 10.192.1.1
+- IPv4: 10.192.1.1
+- IPv6: fd4b:7618:f5ec:798d::1
 
 # Ansible
 - ansible.test.local
-- IP: 10.192.1.2
+- IPv4: 10.192.1.2
+- IPv6: fd4b:7618:f5ec:798d::2
 ```
 
 ## Vorbereitung: Ansible Playbook und Role
@@ -37,39 +44,41 @@ Zunächst stellen wir sicher, dass der Ansible Rechner und der DNS Server sich g
 ping 10.192.1.1
 ```
 
-Anschließend klonen wir das Git Repository, welches für diese Anleitung vorbereitet wurde.
+Anschließend klonen wir das [Git Repository](https://github.com/andrekloster/boilerplate), welches für diese Anleitung vorbereitet wurde.
 
 ```bash
 git clone https://github.com/andrekloster/boilerplate.git
 ```
 
-In diesem Repository befindet sich das Verzeichnis `bind9`, welches eine Vorlage für unsere Ansible Role zur Verfügung stellt.
+In diesem Repository befindet sich das Verzeichnis `iac/ansible/bind9`, das eine Vorlage für die Anleitung zur Verfügung stellt.
 
 ```
-boilerplate
-├── README.md
-└── bind9
-    ├── dns.yaml
-    ├── inventory
-    └── roles
-        └── dns
-            ├── handlers
-            │   └── main.yaml
-            ├── tasks
-            │   └── main.yaml
-            ├── templates
-            │   └── etc
-            │       └── bind
-            │           ├── named.conf.local
-            │           ├── named.conf.options
-            │           └── zones
-            │               ├── 1.192.10.in-addr.arpa
-            │               └── test.local
-            └── vars
-                └── main.yaml
+.
+└── iac
+    └── ansible
+        └── bind9
+            ├── dns.yaml
+            ├── inventory
+            └── roles
+                └── dns
+                    ├── handlers
+                    │   └── main.yaml
+                    ├── tasks
+                    │   └── main.yaml
+                    ├── templates
+                    │   └── etc
+                    │       └── bind
+                    │           ├── named.conf.local
+                    │           ├── named.conf.options
+                    │           └── zones
+                    │               ├── 1.192.10.in-addr.arpa
+                    │               ├── d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa
+                    │               └── test.local
+                    └── vars
+                        └── main.yaml
 ```
 
-### Stammverzeichnis ###
+### Stammverzeichnis
 
 **dns.yaml**
 
@@ -98,7 +107,7 @@ ansible_python_interpreter=/usr/bin/python3
 
 In der `inventory` Datei definieren wir eine dns-Gruppe und tragen dort die IP vom DNS-Server ein. Diese Datei vereinfacht die Durchführung vom Playbook.
 
-### roles/dns Verzeichnis ###
+### roles/dns Verzeichnis
 
 **handlers/main.yaml**
 
@@ -161,6 +170,7 @@ Dieser Handler kann in einem Ansible Playbook aufgerufen werden, um den `bind9` 
   loop:
     - 'test.local'
     - '1.192.10.in-addr.arpa'
+    - 'd.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa'
   notify: restart bind
 ```
 
@@ -186,30 +196,29 @@ In diesem bind Konfigurationstemplate werden mit Hilfe einer for-Schleife alle D
 options {
 
   directory "/var/cache/bind";
-
+  
   forwarders {
     1.1.1.1;
   };
-
+  forward only;
+  
   listen-on port 53 {
     127.0.0.1;
     10.192.1.1;
   };
 
-  allow-query {
-    127.0.0.1;
+  listen-on-v6 {
     ::1;
-    10.0.0.0/8;
+    fd4b:7618:f5ec:798d::1;
   };
 
-  #allow-transfer {
-  #  10.172.1.1;
-  #};
-
-  #also-notify {
-  #  10.172.1.1;
-  #};
-
+  allow-query {
+    127.0.0.1;
+    10.0.0.0/8;
+    ::1;
+    fd4b:7618:f5ec:798d::/64;
+  };
+  
   allow-update-forwarding { none; };
   auth-nxdomain no;
   dnssec-validation auto;
@@ -219,15 +228,15 @@ logging {
 
   channel simple_log {
     file "/var/log/named/bind.log" versions 3 size 3m;
-        severity notice;
-        print-time yes;
-        print-severity yes;
-        print-category yes;
+	  severity notice;
+	  print-time yes;
+	  print-severity yes;
+	  print-category yes;
   };
 
   category default {
     simple_log;
-        default_syslog;
+    default_syslog;
   };
 };
 ```
@@ -261,7 +270,7 @@ $TTL 10m
 
 Das ist unser Template für die DNS-Zone. Darin verwalten wir alle DNS Records mit der Zuordnung Domain -> IP.
 
-**templates/etc/bind/zones/test.local**
+**templates/etc/bind/zones/1.192.10.in-addr.arpa**
 
 ```jinja
 $TTL 60
@@ -277,36 +286,68 @@ $TTL 60
 
 @    IN NS  dns.test.local.
 
-{% for hostname, ip_suffix in zones['1.192.10.in-addr.arpa']['records']['a'].items() %}
+{% for hostname, ip_suffix in zones['1.192.10.in-addr.arpa']['records'].items() %}
 {{ ip_suffix[0] }}  IN  PTR  {{ hostname }}.test.local.
 {% endfor %}
 ```
 
-Das ist unser Template für die DNS Rückwärtsauflösung. Darin verwalten wir alle DNS Records mit der Zuordnung IP -> Domain.
+**templates/etc/bind/zones/8.9.d.b.9.b.6.5.8.c.4.e.0.7.d.f.ip6.arpa**
+```jinja
+$TTL 60
+@ IN SOA dns.test.local. info.dns.test.local. (
+{% for serial in zones['8.9.d.b.9.b.6.5.8.c.4.e.0.7.d.f.ip6.arpa']['serial'] %}
+    {{ serial }} ; serial
+{% endfor %}
+    3h ; refresh
+    10m ; retry
+    7d ; expire
+    10m ; TTL
+)
+
+@    IN NS  dns.test.local.
+
+{% for hostname, ip_suffix in zones['d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa']['records'].items() %}
+{{ ip_suffix[0] }}  IN  PTR  {{ hostname }}.test.local.
+{% endfor %}
+```
+
+
+Das ist unsere IPv4 und IPv6 Templates für die DNS Rückwärtsauflösung. Darin verwalten wir alle DNS Records mit der Zuordnung IP -> Domain.
 
 **vars/main.yaml**
 
 ```yaml
 ---
 zones:
-  domus.local:
+  test.local:
     serial: ["2022090201"]
     records:
       a:
         dns: ["10.192.1.1"]
         ansible: ["10.192.1.2"]
+      aaaa:
+        dns: ["fd4b:7618:f5ec:798d::1"]
+        ansible: ["fd4b:7618:f5ec:798d::2"]
       cname:
         test-cname: ["dns"]
   1.42.10.in-addr.arpa:
     serial: ["2022090201"]
     records:
-      a:
-        dns: ["1"]
-        ansible: ["2"]
+      dns: ["1"]
+      ansible: ["2"]
+  d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa:
+    serial: ["2022090201"]
+    records:
+      dns: ["1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0"]
+      ansible: ["2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0"]
 ```
 
-Diese YAML ist die wichtigste Konfigurationsdatei. Alle DNS Records werden ausschließlich hier definiert. Ansible gibt somit den Varibalen innerhalb der Templates ihre Werte.
+Diese YAML ist die wichtigste Konfigurationsdatei. Alle DNS Records werden ausschließlich hier definiert.
 
 ## Durchführung
 
-## Extra
+Um das Playbook auszuführen, verbinden wir uns via SSH mit dem Ansible Server und führen folgenden Befehl aus:
+
+```shell
+ansible-playbook -i inventory dns.yaml -K
+```
