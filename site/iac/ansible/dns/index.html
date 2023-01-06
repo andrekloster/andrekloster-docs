@@ -6,21 +6,25 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
+        <meta name="description" content="Die IT Dokumentation von André Kloster">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+        <meta name="author" content="André Kloster">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.3.1, mkdocs-material-8.5.3">
     
     
       
-        <title>DNS - Dokumentation</title>
+        <title>Lokaler DNS Server mit Bind9 erstellen - Dokumentation</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.7a952b86.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7a952b86.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.cbb835fc.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.cbb835fc.min.css">
         
       
       
@@ -37,7 +41,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lokaler-dns-server-mit-bind9-und-ansible" class="md-skip">
+        <a href="#lokaler-dns-server-mit-bind9-erstellen" class="md-skip">
           Zum Inhalt
         </a>
       
@@ -74,9 +78,11 @@
     
       
 
-<header class="md-header" data-md-component="header">
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Kopfzeile">
-    <a href=".." title="Dokumentation" class="md-header__button md-logo" aria-label="Dokumentation" data-md-component="logo">
+    <a href="../../.." title="Dokumentation" class="md-header__button md-logo" aria-label="Dokumentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -95,7 +101,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DNS
+              Lokaler DNS Server mit Bind9 erstellen
             
           </span>
         </div>
@@ -138,15 +144,77 @@
 </div>
     
     
+      <div class="md-header__source">
+        <a href="https://github.com/andrekloster/boilerplate/" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    andrekloster/boilerplate
+  </div>
+</a>
+      </div>
+    
   </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Hauptnavigation" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../puppet/" class="md-tabs__link md-tabs__link--active">
+        IaC
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
   
 </header>
     
     <div class="md-container" data-md-component="container">
       
       
-        
-          
         
       
       <main class="md-main" data-md-component="main">
@@ -159,10 +227,12 @@
                   <div class="md-sidebar__inner">
                     
 
+  
 
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Dokumentation" class="md-nav__button md-logo" aria-label="Dokumentation" data-md-component="logo">
+    <a href="../../.." title="Dokumentation" class="md-nav__button md-logo" aria-label="Dokumentation" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -170,6 +240,18 @@
     </a>
     Dokumentation
   </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/andrekloster/boilerplate/" title="Zum Repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    andrekloster/boilerplate
+  </div>
+</a>
+    </div>
   
   <ul class="md-nav__list" data-md-scrollfix>
     
@@ -180,10 +262,39 @@
   
   
   
-    <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
-        Home
-      </a>
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../..">Home</a>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -192,6 +303,163 @@
       
       
 
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        
+          
+        
+          
+        
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          IaC
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="IaC" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          IaC
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../../puppet/">Puppet</a>
+          
+            <label for="__nav_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Puppet" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Puppet
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../puppet/create_puppet_server/" class="md-nav__link">
+        Einen Puppet Server erstellen
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../puppet/simple_module/" class="md-nav__link">
+        Ein einfaches Puppet Module
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+        
+          
+            
+          
+        
+          
+        
+      
+      
+        
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../">Ansible</a>
+          
+            <label for="__nav_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Ansible" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Ansible
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+          
+            
+              
   
   
     
@@ -206,12 +474,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          DNS
+          Lokaler DNS Server mit Bind9 erstellen
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        DNS
+        Lokaler DNS Server mit Bind9 erstellen
       </a>
       
         
@@ -277,17 +545,24 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#extra" class="md-nav__link">
-    Extra
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
     </li>
   
 
@@ -366,13 +641,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#extra" class="md-nav__link">
-    Extra
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -387,14 +655,34 @@
                 
                   
 
+  <a href="https://github.com/andrekloster/boilerplate/edit/master/docs/iac/ansible/dns.md" title="Seite editieren" class="md-content__button md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
 
-<h1 id="lokaler-dns-server-mit-bind9-und-ansible">Lokaler DNS Server mit Bind9 und Ansible</h1>
+
+<h1 id="lokaler-dns-server-mit-bind9-erstellen">Lokaler DNS Server mit Bind9 erstellen</h1>
+<div class="toc">
+<ul>
+<li><a href="#lokaler-dns-server-mit-bind9-erstellen">Lokaler DNS Server mit Bind9 erstellen</a><ul>
+<li><a href="#ziel">Ziel</a></li>
+<li><a href="#voraussetzungen">Voraussetzungen</a></li>
+<li><a href="#vorbereitung-ansible-playbook-und-role">Vorbereitung: Ansible Playbook und Role</a><ul>
+<li><a href="#stammverzeichnis">Stammverzeichnis</a></li>
+<li><a href="#rolesdns-verzeichnis">roles/dns Verzeichnis</a></li>
+</ul>
+</li>
+<li><a href="#durchfuhrung">Durchführung</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <h2 id="ziel">Ziel</h2>
 <p>Mit Hilfe von Ansible möchten wir die Einrichtung und Wartung eines lokalen Bind9-DNS automatisieren und somit den administrativen Aufwand vereinfachen.
 Besonders im HomeLab ist ein lokaler DNS besonders hilfreich und ermöglicht eine bessere Kommunikation zwischen internen Diensten im Netzwerk.
 Am Ende dieser Anleitung wird es möglich sein mit nur einer YAML Datei alle notwendigen DNS Records zu verwalten.</p>
 <h2 id="voraussetzungen">Voraussetzungen</h2>
-<p>Zur Einrichtung des DNS wird ein Server mit Debian benötigt. Zusätzlich brauchen wir eine Maschine auf der Ansible installiert ist.
+<p>Zur Einrichtung des DNS wird ein Linux Server mit z.Bsp. Debian benötigt. Zusätzlich brauchen wir eine Maschine auf der Ansible installiert ist.
 Beide Rechner müssen sich über ein Netzwerk erreichen können und wir müssen aufpassen, dass der Port 53 (TCP/UDP) nicht von einer Firewall blockiert wird.
 Abschließend erfinden wir eine Domain, die zukünftig in unserem Netzwerk gelten soll.</p>
 <div class="highlight"><pre><span></span><code># Domain
@@ -403,44 +691,51 @@ test.local
 # IPv4 CIDR
 10.192.1.0/24
 
+# IPv6 CIDR
+fd4b:7618:f5ec:798d::/64
+
 # DNS Server
 - Hostname: dns.test.local
-- IP: 10.192.1.1
+- IPv4: 10.192.1.1
+- IPv6: fd4b:7618:f5ec:798d::1
 
 # Ansible
 - ansible.test.local
-- IP: 10.192.1.2
+- IPv4: 10.192.1.2
+- IPv6: fd4b:7618:f5ec:798d::2
 </code></pre></div>
 <h2 id="vorbereitung-ansible-playbook-und-role">Vorbereitung: Ansible Playbook und Role</h2>
 <p>Zunächst stellen wir sicher, dass der Ansible Rechner und der DNS Server sich gegenseitig im Netzwerk erreichen können.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Folgenden Befehl für wir auf dem Ansible Rechner aus</span>
 ping <span class="m">10</span>.192.1.1
 </code></pre></div>
-<p>Anschließend klonen wir das Git Repository, welches für diese Anleitung vorbereitet wurde.</p>
+<p>Anschließend klonen wir das <a href="https://github.com/andrekloster/boilerplate">Git Repository</a>, welches für diese Anleitung vorbereitet wurde.</p>
 <div class="highlight"><pre><span></span><code>git clone https://github.com/andrekloster/boilerplate.git
 </code></pre></div>
-<p>In diesem Repository befindet sich das Verzeichnis <code>bind9</code>, welches eine Vorlage für unsere Ansible Role zur Verfügung stellt.</p>
-<div class="highlight"><pre><span></span><code>boilerplate
-├── README.md
-└── bind9
-    ├── dns.yaml
-    ├── inventory
-    └── roles
-        └── dns
-            ├── handlers
-            │   └── main.yaml
-            ├── tasks
-            │   └── main.yaml
-            ├── templates
-            │   └── etc
-            │       └── bind
-            │           ├── named.conf.local
-            │           ├── named.conf.options
-            │           └── zones
-            │               ├── 1.192.10.in-addr.arpa
-            │               └── test.local
-            └── vars
-                └── main.yaml
+<p>In diesem Repository befindet sich das Verzeichnis <code>iac/ansible/bind9</code>, das eine Vorlage für die Anleitung zur Verfügung stellt.</p>
+<div class="highlight"><pre><span></span><code>.
+└── iac
+    └── ansible
+        └── bind9
+            ├── dns.yaml
+            ├── inventory
+            └── roles
+                └── dns
+                    ├── handlers
+                    │   └── main.yaml
+                    ├── tasks
+                    │   └── main.yaml
+                    ├── templates
+                    │   └── etc
+                    │       └── bind
+                    │           ├── named.conf.local
+                    │           ├── named.conf.options
+                    │           └── zones
+                    │               ├── 1.192.10.in-addr.arpa
+                    │               ├── d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa
+                    │               └── test.local
+                    └── vars
+                        └── main.yaml
 </code></pre></div>
 <h3 id="stammverzeichnis">Stammverzeichnis</h3>
 <p><strong>dns.yaml</strong></p>
@@ -518,6 +813,7 @@ ping <span class="m">10</span>.192.1.1
 <span class="w">  </span><span class="nt">loop</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;test.local&#39;</span><span class="w"></span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;1.192.10.in-addr.arpa&#39;</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa&#39;</span><span class="w"></span>
 <span class="w">  </span><span class="nt">notify</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restart bind</span><span class="w"></span>
 </code></pre></div>
 <p>Hier wird das <code>bind9</code> Paket installiert, sowie alle notwendigen Verzeichnisse und Konfigurationen mit den richtigen Berechtigungen hinterlegt.</p>
@@ -539,25 +835,24 @@ ping <span class="m">10</span>.192.1.1
   forwarders {
     1.1.1.1;
   };
+  forward only;
 
   listen-on port 53 {
     127.0.0.1;
     10.192.1.1;
   };
 
-  allow-query {
-    127.0.0.1;
+  listen-on-v6 {
     ::1;
-    10.0.0.0/8;
+    fd4b:7618:f5ec:798d::1;
   };
 
-  #allow-transfer {
-  #  10.172.1.1;
-  #};
-
-  #also-notify {
-  #  10.172.1.1;
-  #};
+  allow-query {
+    127.0.0.1;
+    10.0.0.0/8;
+    ::1;
+    fd4b:7618:f5ec:798d::/64;
+  };
 
   allow-update-forwarding { none; };
   auth-nxdomain no;
@@ -568,15 +863,15 @@ logging {
 
   channel simple_log {
     file &quot;/var/log/named/bind.log&quot; versions 3 size 3m;
-        severity notice;
-        print-time yes;
-        print-severity yes;
-        print-category yes;
+      severity notice;
+      print-time yes;
+      print-severity yes;
+      print-category yes;
   };
 
   category default {
     simple_log;
-        default_syslog;
+    default_syslog;
   };
 };
 </code></pre></div>
@@ -604,7 +899,7 @@ logging {
 <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
 </code></pre></div>
 <p>Das ist unser Template für die DNS-Zone. Darin verwalten wir alle DNS Records mit der Zuordnung Domain -&gt; IP.</p>
-<p><strong>templates/etc/bind/zones/test.local</strong></p>
+<p><strong>templates/etc/bind/zones/1.192.10.in-addr.arpa</strong></p>
 <div class="highlight"><pre><span></span><code><span class="x">$TTL 60</span>
 <span class="x">@ IN SOA dns.test.local. info.dns.test.local. (</span>
 <span class="cp">{%</span> <span class="k">for</span> <span class="nv">serial</span> <span class="k">in</span> <span class="nv">zones</span><span class="o">[</span><span class="s1">&#39;1.192.10.in-addr.arpa&#39;</span><span class="o">][</span><span class="s1">&#39;serial&#39;</span><span class="o">]</span> <span class="cp">%}</span><span class="x"></span>
@@ -618,32 +913,59 @@ logging {
 
 <span class="x">@    IN NS  dns.test.local.</span>
 
-<span class="cp">{%</span> <span class="k">for</span> <span class="nv">hostname</span><span class="o">,</span> <span class="nv">ip_suffix</span> <span class="k">in</span> <span class="nv">zones</span><span class="o">[</span><span class="s1">&#39;1.192.10.in-addr.arpa&#39;</span><span class="o">][</span><span class="s1">&#39;records&#39;</span><span class="o">][</span><span class="s1">&#39;a&#39;</span><span class="o">]</span><span class="nv">.items</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">hostname</span><span class="o">,</span> <span class="nv">ip_suffix</span> <span class="k">in</span> <span class="nv">zones</span><span class="o">[</span><span class="s1">&#39;1.192.10.in-addr.arpa&#39;</span><span class="o">][</span><span class="s1">&#39;records&#39;</span><span class="o">]</span><span class="nv">.items</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
 <span class="cp">{{</span> <span class="nv">ip_suffix</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="cp">}}</span><span class="x">  IN  PTR  </span><span class="cp">{{</span> <span class="nv">hostname</span> <span class="cp">}}</span><span class="x">.test.local.</span>
 <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
 </code></pre></div>
-<p>Das ist unser Template für die DNS Rückwärtsauflösung. Darin verwalten wir alle DNS Records mit der Zuordnung IP -&gt; Domain.</p>
+<p><strong>templates/etc/bind/zones/8.9.d.b.9.b.6.5.8.c.4.e.0.7.d.f.ip6.arpa</strong>
+<div class="highlight"><pre><span></span><code><span class="x">$TTL 60</span>
+<span class="x">@ IN SOA dns.test.local. info.dns.test.local. (</span>
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">serial</span> <span class="k">in</span> <span class="nv">zones</span><span class="o">[</span><span class="s1">&#39;8.9.d.b.9.b.6.5.8.c.4.e.0.7.d.f.ip6.arpa&#39;</span><span class="o">][</span><span class="s1">&#39;serial&#39;</span><span class="o">]</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    </span><span class="cp">{{</span> <span class="nv">serial</span> <span class="cp">}}</span><span class="x"> ; serial</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+<span class="x">    3h ; refresh</span>
+<span class="x">    10m ; retry</span>
+<span class="x">    7d ; expire</span>
+<span class="x">    10m ; TTL</span>
+<span class="x">)</span>
+
+<span class="x">@    IN NS  dns.test.local.</span>
+
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">hostname</span><span class="o">,</span> <span class="nv">ip_suffix</span> <span class="k">in</span> <span class="nv">zones</span><span class="o">[</span><span class="s1">&#39;d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa&#39;</span><span class="o">][</span><span class="s1">&#39;records&#39;</span><span class="o">]</span><span class="nv">.items</span><span class="o">()</span> <span class="cp">%}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">ip_suffix</span><span class="o">[</span><span class="m">0</span><span class="o">]</span> <span class="cp">}}</span><span class="x">  IN  PTR  </span><span class="cp">{{</span> <span class="nv">hostname</span> <span class="cp">}}</span><span class="x">.test.local.</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span><span class="x"></span>
+</code></pre></div></p>
+<p>Das ist unsere IPv4 und IPv6 Templates für die DNS Rückwärtsauflösung. Darin verwalten wir alle DNS Records mit der Zuordnung IP -&gt; Domain.</p>
 <p><strong>vars/main.yaml</strong></p>
 <div class="highlight"><pre><span></span><code><span class="nn">---</span><span class="w"></span>
 <span class="nt">zones</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">domus.local</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">test.local</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">serial</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2022090201&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">    </span><span class="nt">records</span><span class="p">:</span><span class="w"></span>
 <span class="w">      </span><span class="nt">a</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">dns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;10.192.1.1&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">        </span><span class="nt">ansible</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;10.192.1.2&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">      </span><span class="nt">aaaa</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">dns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;fd4b:7618:f5ec:798d::1&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">        </span><span class="nt">ansible</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;fd4b:7618:f5ec:798d::2&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">      </span><span class="nt">cname</span><span class="p">:</span><span class="w"></span>
 <span class="w">        </span><span class="nt">test-cname</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;dns&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">  </span><span class="nt">1.42.10.in-addr.arpa</span><span class="p">:</span><span class="w"></span>
 <span class="w">    </span><span class="nt">serial</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2022090201&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
 <span class="w">    </span><span class="nt">records</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">a</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">dns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;1&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
-<span class="w">        </span><span class="nt">ansible</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;1&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">  </span><span class="nt">d.8.9.7.c.e.5.f.8.1.6.7.b.4.d.f.ip6.arpa</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">serial</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2022090201&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">    </span><span class="nt">records</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">dns</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;2.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0&quot;</span><span class="p p-Indicator">]</span><span class="w"></span>
 </code></pre></div>
-<p>Diese YAML ist die wichtigste Konfigurationsdatei. Alle DNS Records werden ausschließlich hier definiert. Ansible gibt somit den Varibalen innerhalb der Templates ihre Werte.</p>
+<p>Diese YAML ist die wichtigste Konfigurationsdatei. Alle DNS Records werden ausschließlich hier definiert.</p>
 <h2 id="durchfuhrung">Durchführung</h2>
-<h2 id="extra">Extra</h2>
+<p>Um das Playbook auszuführen, verbinden wir uns via SSH mit dem Ansible Server und führen folgenden Befehl aus:</p>
+<div class="highlight"><pre><span></span><code>ansible-playbook -i inventory dns.yaml -K
+</code></pre></div>
 
 
 
@@ -664,7 +986,7 @@ logging {
     <nav class="md-footer__inner md-grid" aria-label="Fußzeile" >
       
         
-        <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Zurück: Home" rel="prev">
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Zurück: Inhaltsverzeichniss" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
           </div>
@@ -673,7 +995,7 @@ logging {
               <span class="md-footer__direction">
                 Zurück
               </span>
-              Home
+              Inhaltsverzeichniss
             </div>
           </div>
         </a>
@@ -702,10 +1024,10 @@ logging {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.config.lang": "de", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Suche", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version.title": "Version ausw\u00e4hlen"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.expand", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.5bf1dace.min.js", "translations": {"clipboard.copied": "In Zwischenablage kopiert", "clipboard.copy": "In Zwischenablage kopieren", "search.config.lang": "de", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Suche", "search.result.more.one": "1 weiteres Suchergebnis auf dieser Seite", "search.result.more.other": "# weitere Suchergebnisse auf dieser Seite", "search.result.none": "Keine Suchergebnisse", "search.result.one": "1 Suchergebnis", "search.result.other": "# Suchergebnisse", "search.result.placeholder": "Suchbegriff eingeben", "search.result.term.missing": "Es fehlt", "select.version.title": "Version ausw\u00e4hlen"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.37e9125f.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.37e9125f.min.js"></script>
       
     
   </body>
