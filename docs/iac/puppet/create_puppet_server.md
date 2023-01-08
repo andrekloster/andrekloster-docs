@@ -16,33 +16,33 @@ Um den Puppet Server installieren zu können, müssen wir zunächst die apt-sour
 
 ```shell
 # Installiere notwendige Pakete für apt-source-list via HTTPs und GPG
-apt update
-apt install -y wget gnupg apt-transport-https
+sudo apt update
+sudo apt install -y wget gnupg apt-transport-https
 ```
 
 ```shell
 # Für die apt-source-list hinzu
-echo "deb https://apt.puppetlabs.com/ bullseye puppet7" > /etc/apt/sources.list.d/puppet.list
+sudo echo "deb https://apt.puppetlabs.com/ bullseye puppet7" > /etc/apt/sources.list.d/puppet.list
 ```
 
 ```shell
 # Lade den GPG public keyring von Puppet herunter und füge ihn im System hinzu.
 wget -4 https://apt.puppetlabs.com/keyring.gpg -O /tmp/puppet.gpg
-cat /tmp/puppet.gpg | gpg --dearmor >/etc/apt/trusted.gpg.d/puppet.gpg
+sudo cat /tmp/puppet.gpg | gpg --dearmor >/etc/apt/trusted.gpg.d/puppet.gpg
 ```
 
 ## Installation und Konfiguration des Puppet Servers
 
 ```shell
 # Installiere puppetserver
-apt update
-apt install -y puppetserver
+sudo apt update
+sudo apt install -y puppetserver
 ```
 
 Nun öffnen wir die Puppet Konfigurationsdatei und legen grundsätzliche Werte für den Server fest.
 
 ```shell
-vim /etc/puppetlabs/puppet/puppet.conf
+sudo vim /etc/puppetlabs/puppet/puppet.conf
 ```
 
 ```ini
@@ -61,6 +61,6 @@ codedir = /etc/puppetlabs/code
 Anschließend aktiven wir die systemd Unit und starten den Puppet Server.
 
 ```shell
-systemctl enable puppetserver
-systemctl start puppetserver
+sudo systemctl enable puppetserver
+sudo systemctl start puppetserver
 ```

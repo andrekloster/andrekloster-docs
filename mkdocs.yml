@@ -1,4 +1,4 @@
-site_name: Dokumentation
+site_name: Dokumentation von André Kloster
 site_description: Die IT Dokumentation von André Kloster
 site_author: André Kloster
 repo_url: https://github.com/andrekloster/boilerplate/
@@ -31,9 +31,13 @@ nav:
         - 'index.md'
     - IaC:
         - Puppet:
-            - 'iac/puppet/index.md'
             - 'iac/puppet/create_puppet_server.md'
             - 'iac/puppet/simple_module.md'
         - Ansible:
-            - 'iac/ansible/index.md'
             - 'iac/ansible/dns.md'
+    - Container:
+        - LXC:
+            - 'container/lxc/preparation.md'
+            - 'container/lxc/unprivileged_container.md'
+            - 'container/lxc/privileged_container.md'
+            - 'container/lxc/raspberrypi.md'

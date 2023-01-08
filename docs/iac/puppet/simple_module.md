@@ -1,8 +1,3 @@
-# Ein einfaches Puppet Module
+# Ein einfaches Puppet Module einrichten
 
 [TOC]
-
-## Ziel
-
-## Voraussetzung
-
