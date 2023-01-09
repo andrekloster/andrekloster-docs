@@ -41,3 +41,5 @@ nav:
             - 'container/lxc/unprivileged_container.md'
             - 'container/lxc/privileged_container.md'
             - 'container/lxc/raspberrypi.md'
+    - PKI:
+        - 'pki/mini_pki.md'
