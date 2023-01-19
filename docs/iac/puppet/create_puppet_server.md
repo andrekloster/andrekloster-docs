@@ -34,7 +34,6 @@ sudo cat /tmp/puppet.gpg | gpg --dearmor >/etc/apt/trusted.gpg.d/puppet.gpg
 ## Installation und Konfiguration des Puppet Servers
 
 ```shell
-# Installiere puppetserver
 sudo apt update
 sudo apt install -y puppetserver
 ```
@@ -47,7 +46,7 @@ sudo vim /etc/puppetlabs/puppet/puppet.conf
 
 ```ini
 [agent]
-server = <SERVER-FQDN> # Anpassen!
+server = <PUPPET-SERVER-FQDN> # Anpassen!
 environment = production
 
 [server]

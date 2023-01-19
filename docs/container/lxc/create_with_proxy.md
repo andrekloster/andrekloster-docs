@@ -11,7 +11,7 @@ Wir gehen davon aus, dass unser Proxy den Hostnamen `proxy.domain.local` hat und
 Das ist ein üblicher Port für einen [Squid HTTP-Proxy](http://www.squid-cache.org/).
 
 ## Umgebungsvariablen setzen und LXC erstellen
-Wir exportieren für die aktuelle Shell folgende Umgebungsvariablen, um die Debain apt-sources-lists über den Proxy zu erreichen.
+Wir exportieren für die aktuelle Shell folgende Umgebungsvariablen, um die Debain apt-source-lists über den Proxy zu erreichen.
 
 ```shell
 export MIRROR=http://proxy.domain.local:3142/ftp.de.debian.org/debian

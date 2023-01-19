@@ -11,8 +11,8 @@ Eine Icinga2 Installation mit der IcingaDB setzt sich auch mehrere Faktoren zusa
 
 - **Icinga2**: Backend, das alle Konfigurationen für die Host- und Serviceüberwachungen bereitstellt.
 - **Icinga Web**: Frontend, das für die grafische Darstellung im Browser zuständig ist.
-- **Datenbank**: Eine SQL Dantebank (MySQL, PostgreSQL), die den Zustand aller Icingaüberwachungen speichert
-- **IcingaDB**: Einen Middleware, die das Backend mit der Datenbank verbinden
+- **Datenbank**: Eine SQL Dantebank (MySQL, PostgreSQL), die den Zustand aller Icingaüberwachungen speichert.
+- **IcingaDB**: Einen Middleware, die das Backend mit der Datenbank verbindet.
 - **Redis**: Ein Cache Server, der die Datenbankabfragen im RAM-Speicher performant aufbewahrt.
 
 ## Installation
@@ -35,7 +35,7 @@ systemctl restart icinga2
 ```
 
 Mit Hilfe der API kommunizieren alle Komponenten der Architektur miteinander.
-Nachdem die API initalisiert wurde, öffnen wir die Datei `/etc/icinga2/conf.d/api-users.conf` und notieren uns
+Nachdem die API initialisiert wurde, öffnen wir die Datei `/etc/icinga2/conf.d/api-users.conf` und notieren uns
 den automatisch angelegten Benutzer und das Passwort. Ggf. passen wir noch die Berechtigungen des API Benutzers an.
 Eine API Benutzerkonfiguration könnte wie folgt aussehen:
 
