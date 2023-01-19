@@ -1,4 +1,4 @@
-# Besondersheiten beim Raspberry Pi
+# Besonderheiten beim Raspberry Pi
 
 [TOC]
 

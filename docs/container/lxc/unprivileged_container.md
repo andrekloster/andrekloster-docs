@@ -1,5 +1,8 @@
 # Einen unprivilegierten Linux Container erstellen
 
+[TOC]
+
+## Einleitung
 Ein unprivilegierter Container bietet die Möglichkeit Prozessisolation als unprivilegierten Benutzer durchzuführen.
 Bei dieser Art des LXCs findet auf dem Hostsystem ein Mapping der User/Group-IDs statt.
 Beispiel:
@@ -22,6 +25,7 @@ In beide Dateien soll folgender Eintrag stehen: `root:1000000:65536`
 
 Damit legen wir fest, dass die neuen Container-IDs für `root` ab `1000000` beginnen und die maximale Anzahl `65536` beträgt.
 
+## Installation
 Anschließend erfolgt die Einrichtung des Linux Containers. Für unprivilegierte Container muss explizit das Template Namens
 `download` verwendet werden. Dieses Template ist speziell für das Mapping der UIDs und GIDs angepasst worden.
 
@@ -69,4 +73,13 @@ Anschließend kann der unprivilegierte Container gestartet werden:
 
 ```shell
 sudo lxc-start unpriv-container-1
+```
+
+## Optional: Linux Container mit weiteren Debian-Paketen installieren
+Falls gewünscht, kann schon während der Erstellung eines Linux Container noch zusätzliche Software installiert werden,
+bevor der Container zum ersten Mal gestartet wurde.
+
+```shell
+sudo lxc-create -t download -n unpriv-container-1 -- -d debian -r bullseye -a amd64 \
+  --packages='iputils-ping,man-db,vim,less,apt-transport-https,gnupg,net-tools,lsb-release,curl,dbus'
 ```

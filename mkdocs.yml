@@ -41,5 +41,8 @@ nav:
             - 'container/lxc/unprivileged_container.md'
             - 'container/lxc/privileged_container.md'
             - 'container/lxc/raspberrypi.md'
+            - 'container/lxc/create_with_proxy.md'
+    - Monitoring:
+        - 'monitoring/icinga.md'
     - PKI:
         - 'pki/mini_pki.md'

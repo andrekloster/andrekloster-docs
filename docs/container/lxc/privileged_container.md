@@ -1,5 +1,8 @@
 # Einen privilegierten Linux Container erstellen
 
+[TOC]
+
+## Einleitung
 Ein privilegierter Container hat im Gegensatz zu einem [unprivilegierten Container](/container/lxc/unprivileged_container)
 mehr Rechte. Hier entfällt das Mapping der UIDs und GIDs. Dh., dass Prozesse die von root gestartet werden, sowohl innerhalb,
 als auch außerhalb des Containers die gleiche UID 0 besitzen.
@@ -13,6 +16,7 @@ Es ist empfehlenswert einen privilegierten Container nur im Ausnahmezustand zu e
 das Einhängen einer ein externen Partition in den Container. In unserem Beispiel gehen wir davon aus, dass wir eine
 Partition `/dev/sda1` im `ext4` Format zur Verfügung haben. Die externe Partition werden wir in den Container einhängen.
 
+## Installation
 Zunächst erstellen wir einen privilegierten Container, indem wir folgenden Befehl ausführen:
 
 ```shell
@@ -74,4 +78,13 @@ Anschließend kann der privilegierte Container gestartet werden:
 
 ```shell
 sudo lxc-start priv-container-1
+```
+
+## Optional: Linux Container mit weiteren Debian-Paketen installieren
+Falls gewünscht, kann schon während der Erstellung eines Linux Container noch zusätzliche Software installiert werden,
+bevor der Container zum ersten Mal gestartet wurde.
+
+```shell
+sudo lxc-create -n priv-container-1 -- -d debian -r bullseye -a amd64 \
+  --packages='iputils-ping,man-db,vim,less,apt-transport-https,gnupg,net-tools,lsb-release,curl,dbus'
 ```
