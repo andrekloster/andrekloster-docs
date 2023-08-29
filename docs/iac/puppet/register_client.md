@@ -6,23 +6,11 @@
 Um einen Rechner via Puppet zu konfigurieren, muss der Rechner zunächst als Client registriert werden.
 
 ## Puppet Agent auf dem Client installieren
-Um den Puppet Client installieren zu können, müssen wir zunächst die apt-source-list inkl. GPG von Puppet auf unserem Linux Server einrichten.
 
 ```shell
-# Installiere notwendige Pakete für apt-source-list via HTTPs und GPG
-sudo apt update
-sudo apt install -y wget gnupg apt-transport-https
-```
-
-```shell
-# Für die apt-source-list hinzu
-sudo echo "deb https://apt.puppetlabs.com/ bullseye puppet7" > /etc/apt/sources.list.d/puppet.list
-```
-
-```shell
-# Lade den GPG public keyring von Puppet herunter und füge ihn im System hinzu.
-wget -4 https://apt.puppetlabs.com/keyring.gpg -O /tmp/puppet.gpg
-sudo cat /tmp/puppet.gpg | gpg --dearmor >/etc/apt/trusted.gpg.d/puppet.gpg
+# Installiere notwendige Update und setze den Hostnamenyy
+sudo apt update && sudo apt upgrade -y
+sudo hostnamectl set-hostname <PUPPET-CLIENT-FQDN> # Anpassen!
 ```
 
 !!! info
@@ -37,14 +25,13 @@ sudo apt install -y puppet-agent
 Nun öffnen wir die Puppet Konfigurationsdatei und legen grundsätzliche Werte für den Client fest.
 
 ```shell
-sudo vim /etc/puppetlabs/puppet/puppet.conf
+sudo vim /etc/puppet/puppet.conf
 ```
 
 ```ini
 [agent]
 environment = production
 server = <PUPPET-SERVER-FQDN> # Anpassen!
-pluginsync = true
 ```
 
 ## Client authentifizieren

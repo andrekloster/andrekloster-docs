@@ -113,8 +113,8 @@ subjectAltName           = @server_alt_names
 extendedKeyUsage         = serverAuth
 
 [ server_alt_names ]
-DNS.1 = test-1.sciurus.lan
-DNS.2 = test.sciurus.lan
+DNS.1 = test-1.example.com
+DNS.2 = test.example.com
 ```
 
 Anschließend generieren wir einen weiteren privaten Schlüssel für das Server-Zertifikat.
@@ -138,7 +138,7 @@ an den das Zertifikat ausgestellt werden soll.
 
 ```shell
 openssl req -new -key 'server_key.pem' -sha256 -out 'req_server.csr' \
-    -subj '/C=DE/ST=Berlin/L=Berlin/O=Sciurus LAN/OU=Test/CN=test-1.sciurus.lan'
+    -subj '/C=DE/ST=Berlin/L=Berlin/O=Example COM/OU=Test/CN=test-1.example.com'
 ```
 
 Wir überprüfen gründlich den Inhalt vom Request.

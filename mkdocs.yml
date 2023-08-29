@@ -11,6 +11,7 @@ theme:
         - navigation.tabs.sticky
         - navigation.expand
         - navigation.indexes
+        - content.code.copy
     plugins:
         - search:
             lang: de
@@ -33,7 +34,6 @@ nav:
         - Puppet:
             - 'iac/puppet/create_puppet_server.md'
             - 'iac/puppet/register_client.md'
-            - 'iac/puppet/simple_module.md'
         - Ansible:
             - 'iac/ansible/dns.md'
     - Container:
@@ -43,6 +43,11 @@ nav:
             - 'container/lxc/privileged_container.md'
             - 'container/lxc/raspberrypi.md'
             - 'container/lxc/create_with_proxy.md'
+    - Datenbanken:
+        - 'databases/etcd.md'
+        - 'databases/postgresql_patroni.md'
+        - 'databases/mysql_innodb.md'
+        - 'databases/mongodb.md'
     - Monitoring:
         - 'monitoring/icinga.md'
     - PKI:

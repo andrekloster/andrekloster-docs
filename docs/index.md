@@ -6,5 +6,4 @@
 Herzlich willkommen bei der Dokumentation von André Kloster. In dieser Dokumentation findest du eine Ansammlung von Erklärungen und Beispielen rund um die Themen
 *DevOps* und *Linux-Administration*.
 
-[Über mich](https://www.andrekloster.de){ .md-button }
 [Github](https://github.com/andrekloster){ .md-button }

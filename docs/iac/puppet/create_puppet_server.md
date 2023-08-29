@@ -8,40 +8,26 @@ Dieser Server ist das zentrale Objekt der Infrastruktur, bei dem die Clients in 
 nach Änderungen abfragen.
 
 ## Voraussetzungen
-- Linux Server (z.Bsp. Debian Bullseye)
+- Linux Server (z.Bsp. Debian Bookworm)
 - Mindestens 1GB frei verfügbaren RAM
 
 ## Vorbereitungen
-Um den Puppet Server installieren zu können, müssen wir zunächst die apt-source-list inkl. GPG von Puppet auf unserem Linux Server einrichten.
-
 ```shell
-# Installiere notwendige Pakete für apt-source-list via HTTPs und GPG
-sudo apt update
-sudo apt install -y wget gnupg apt-transport-https
-```
-
-```shell
-# Für die apt-source-list hinzu
-sudo echo "deb https://apt.puppetlabs.com/ bullseye puppet7" > /etc/apt/sources.list.d/puppet.list
-```
-
-```shell
-# Lade den GPG public keyring von Puppet herunter und füge ihn im System hinzu.
-wget -4 https://apt.puppetlabs.com/keyring.gpg -O /tmp/puppet.gpg
-sudo cat /tmp/puppet.gpg | gpg --dearmor >/etc/apt/trusted.gpg.d/puppet.gpg
+# Installiere notwendige Update und setze den Hostnamenyy
+sudo apt update && sudo apt upgrade -y
+sudo hostnamectl set-hostname <PUPPET-SERVER-FQDN> # Anpassen!
 ```
 
 ## Installation und Konfiguration des Puppet Servers
 
 ```shell
-sudo apt update
 sudo apt install -y puppetserver
 ```
 
 Nun öffnen wir die Puppet Konfigurationsdatei und legen grundsätzliche Werte für den Server fest.
 
 ```shell
-sudo vim /etc/puppetlabs/puppet/puppet.conf
+sudo vim /etc/puppet/puppet.conf
 ```
 
 ```ini
@@ -50,11 +36,10 @@ server = <PUPPET-SERVER-FQDN> # Anpassen!
 environment = production
 
 [server]
-vardir = /opt/puppetlabs/server/data/puppetserver
-logdir = /var/log/puppetlabs/puppetserver
-rundir = /var/run/puppetlabs/puppetserver
-pidfile = /var/run/puppetlabs/puppetserver/puppetserver.pid
-codedir = /etc/puppetlabs/code
+logdir = /var/log/puppet/puppetserver
+rundir = /var/run/puppet/puppetserver
+pidfile = /var/run/puppet/puppetserver/puppetserver.pid
+codedir = /etc/puppet/code
 ```
 
 Anschließend aktiven wir die systemd Unit und starten den Puppet Server.
