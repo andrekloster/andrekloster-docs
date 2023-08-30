@@ -85,7 +85,7 @@ einen dedizierter User `clusteradmin`, der im Folgenden verwenden wird, um das C
 ```js
 // Auf dem Primary
 dba.configureLocalInstance("root@localhost:3306");
-shell.connect('root@db-mysql-test-1.sciurus.lan:3306');
+shell.connect('root@db-mysql-test-1.my-domain.lan:3306');
 cluster = dba.createCluster('my_innodb_cluster');
 cluster.status();
 cluster.setupAdminAccount('clusteradmin');
@@ -113,8 +113,8 @@ Nun können wir auf dem Primary innerhalb der MySQL Shell die Secondary Server e
 
 ```js
 // Auf dem Primary
-cluster.addInstance('clusteradmin@db-mysql-test-2.sciurus.lan:3306',{password: 'mein-clusteradmin-password'});
-cluster.addInstance('clusteradmin@db-mysql-test-3.sciurus.lan:3306',{password: 'mein-clusteradmin-password'});
+cluster.addInstance('clusteradmin@db-mysql-test-2.my-domain.lan:3306',{password: 'mein-clusteradmin-password'});
+cluster.addInstance('clusteradmin@db-mysql-test-3.my-domain.lan:3306',{password: 'mein-clusteradmin-password'});
 ```
 
 ### MySQL Router
@@ -132,7 +132,7 @@ Anschließend starten wir das Bootstrapping. Der `--directory` Parameter erstell
 Wir müssen darauf achten, dass der User `mysqlrouter` die notwendigen Rechte zum Erstellen des Ordner besitzt.
 
 ```bash
-mysqlrouter --bootstrap clusteradmin@db-mysql-test-1.sciurus.lan:3306 --directory /var/lib/mysqlrouter/my_innodb_cluster
+mysqlrouter --bootstrap clusteradmin@db-mysql-test-1.my-domain.lan:3306 --directory /var/lib/mysqlrouter/my_innodb_cluster
 ```
 
 Jetzt können wir mit dem generierten Start-Skript den MySQL Router hochfahren.
@@ -168,7 +168,7 @@ Um Befehle für Wartungsarbeiten durchzuführen, muss zunächst eine Datenbankve
 
 ```
 mysqlsh
-shell.connect('root@db-mysql-test-1.sciurus.lan:3306');
+shell.connect('root@db-mysql-test-1.my-domain.lan:3306');
 ```
 
 ### Cluster Status
@@ -192,12 +192,12 @@ cluster.setPrimaryInstance("db-mysql-test-2:3306");
 Knoten hinzufügen
 
 ```
-cluster.addInstance("db-mysql-test-4.sciurus.lan:3306")
+cluster.addInstance("db-mysql-test-4.my-domain.lan:3306")
 ```
 
 Knoten entfernen
 ```
-cluster.removeInstance("db-mysql-test-4.sciurus.lan:3306")
+cluster.removeInstance("db-mysql-test-4.my-domain.lan:3306")
 ```
 
 ### Cluster Auto-Rejoin anpassen
