@@ -11,7 +11,7 @@ Es ist eine Technik, die ein RAID1 (Spiegelung) übers Netzwerk mittels TCP/IP e
 
 !!! warning "Vorsicht"
     Zunächst muss mit `crm status` sichergestellt werden,
-    dass das [Pacemaker Cluster](https://www.andrekloster.de/cluster) im Wartungsmodus ist
+    dass das [Pacemaker Cluster](/server/cluster) im Wartungsmodus ist
 
 Als Nächstes muss eine neue DRBD-Konfigurationsdatei für eine
 neue Partition angelegt werden.
