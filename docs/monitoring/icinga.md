@@ -59,7 +59,7 @@ Für die Einrichtung der PostgreSQL erstellen wir die notwendigen Zugangsdaten u
 ```shell
 su -l postgres
 createuser -P icingadb # Hier wird nach einem Passwort gefragt. Passwort wird notiert!
-createdb -E UTF8 --locale en_US.UTF-8 -T template0 -O icingadb icingadb
+createdb -E UTF8 -T template0 -O icingadb icingadb
 psql icingadb <<<'CREATE EXTENSION IF NOT EXISTS citext;'
 ```
 
