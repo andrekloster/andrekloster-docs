@@ -5,7 +5,7 @@
 ## Einleitung
 Falls ein Server oder ein wichtiger Dienst ausfällt, ist es notwendig, dass die zuständigen Personen schnellstmöglich am Smartphone informiert werden.
 In diesem Beispiel verwenden wir [Icinga2](https://icinga.com/) für die Serverüberwachung und [NTFY](https://ntfy.sh/) für die Benachrichtigung.
-Mithilfe von eigener Notification-Scripte, sollen die Benachrichtigungen von Icinga2 an NTFY übergeben. Um die Einrichtung dieses System zu automatisieren,
+Mithilfe eigener Notification-Scripte sollen die Benachrichtigungen von Icinga2 an NTFY übergeben werden. Um die Einrichtung dieses System zu automatisieren,
 wird [Puppet](https://www.puppet.com/) verwendet.
 
 <figure markdown>
@@ -37,7 +37,7 @@ In einem konkreten Fall würde eine solche Nachricht so aussehen:
 curl -d "Hallo Welt!" http://10.192.1.15/icinga
 ```
 
-Als HTTP Respone erhalten wir:
+Als HTTP Response erhalten wir:
 
 ```json
 {"id":"tzwMB0X8nqrm","time":1695909298,"expires":1695952498,"event":"message","topic":"icinga","message":"Hallo Welt"}
