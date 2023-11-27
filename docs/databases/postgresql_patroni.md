@@ -15,7 +15,7 @@ auf Container-Technologie.
 
 !!! info "Distributed Configuration Store"
     _Patroni_ verwendet einen _Distributed Configuration Store_ (DCS).
-    Wir verwenden als DCS [etcd](../etcd). Entsprechend muss dieser Dienst vorher
+    Wir verwenden als DCS [etcd](etcd.md). Entsprechend muss dieser Dienst vorher
     eingerichtet werden.
 
 ## Installation

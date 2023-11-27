@@ -40,7 +40,7 @@ gpg --no-default-keyring --keyring /var/cache/lxc/debian/archive-key.gpg --list-
 
 ## DHCP Client deaktivieren
 Um nicht mehrere IP Adresse im Netzwerk vergeben zu bekommen, müssen wir den `dhcpcd` Daemon permanent deaktivieren.
-Erst dann können wir mit der [Einrichtung der Netzwerkbrücke](/container/lxc/preparation) starten
+Erst dann können wir mit der [Einrichtung der Netzwerkbrücke](preparation.md) starten
 
 ```shell
 sudo systemctl stop dhcpcd

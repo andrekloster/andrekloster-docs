@@ -13,10 +13,10 @@ wird [Puppet](https://www.puppet.com/) verwendet.
 </figure>
 
 ## Voraussetzungen
-- Icinga2 ist [installiert und konfiguriert](/monitoring/icinga/)
+- Icinga2 ist [installiert und konfiguriert](../../monitoring/icinga.md)
 - NTFY ist [installiert und konfiguriert](https://docs.ntfy.sh/install/)
-- Puppet-Server ist [installiert und konfiguriert](/iac/puppet/create_puppet_server)
-- Icinga2-Host ist als [Puppet-Client registriert](/iac/puppet/register_client)
+- Puppet-Server ist [installiert und konfiguriert](create_puppet_server.md)
+- Icinga2-Host ist als [Puppet-Client registriert](register_client.md)
 - Alle Server befinden sich im selben Netzwerk
 
 ## Github

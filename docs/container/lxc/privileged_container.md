@@ -3,7 +3,7 @@
 [TOC]
 
 ## Einleitung
-Ein privilegierter Container hat im Gegensatz zu einem [unprivilegierten Container](/container/lxc/unprivileged_container)
+Ein privilegierter Container hat im Gegensatz zu einem [unprivilegierten Container](unprivileged_container.md)
 mehr Rechte. Hier entfällt das Mapping der UIDs und GIDs. Dh., dass Prozesse die von root gestartet werden, sowohl innerhalb,
 als auch außerhalb des Containers die gleiche UID 0 besitzen.
 
@@ -11,6 +11,9 @@ als auch außerhalb des Containers die gleiche UID 0 besitzen.
 | __User__ | __Container-UID__ | __Host-UID__ |
 |----------|-------------------|--------------|
 | root     | 0                 | 0            |
+//container/lxc/privileged_container
+
+
 
 Es ist empfehlenswert einen privilegierten Container nur im Ausnahmezustand zu erstellen. Ein Anwendungsfall wäre z.Bsp.
 das Einhängen einer ein externen Partition in den Container. In unserem Beispiel gehen wir davon aus, dass wir eine

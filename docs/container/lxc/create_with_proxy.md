@@ -18,4 +18,4 @@ export MIRROR=http://proxy.domain.local:3142/ftp.de.debian.org/debian
 export SECURITY_MIRROR=http://proxy.domain.local:3142/ftp.de.debian.org/debian-security
 ```
 
-Anschließend erstellen wie gewohnt einen [privilegierten](/container/lxc/privileged_container) oder [unprivilegierten](/container/lxc/unprivileged_container) Linux Container.
+Anschließend erstellen wie gewohnt einen [privilegierten](privileged_container.md) oder [unprivilegierten](unprivileged_container.md) Linux Container.
