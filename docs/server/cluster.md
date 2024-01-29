@@ -84,7 +84,7 @@ nodelist {
         }
         node {
             name: vm-host-3
-            ring0_addr: 10.168.0.13
+            ring0_addr: 192.168.0.13
             nodeid: 3
         }
 }
@@ -175,8 +175,9 @@ rsc_defaults rsc-options: \
 ```
 
 !!! danger "Achtung"
-    Bei allen beschriebenen Handlungsschritten muss unbedingt der Cluster Manager im Wartungsmodus sein: <br>
-    `menu` -> `cluster` -> `maintenance`
+    Bei den folgenden Handlungsanweisungen muss unbedingt der Cluster Manager im Wartungsmodus sein,
+    da sonst Resourcen unkontrolliert ausgeschaltet werden könnten: <br>
+    `/usr/sbin/crm_attribute --type crm_config --name maintenance-mode --update true`
 
 
 ## Pacemaker um eine Ressource erweitern
@@ -187,7 +188,7 @@ Dafür kopieren wir zunächst die aktuelle Konfiguration lokal ab und generieren
 ```shell
 mkdir -p /tmp/pacemaker; cd /tmp/pacemaker
 crm conf show > current_config.pcmk
-sed '/^[[:space:]]/{H; d;};  x; /www-1/!d;  s,www-1,www-2,g;' current_config.pcmk > www-2.pcmk
+sed '/^[[:space:]]/{H; d;};  x; /www-1/!d;  s,www-1,www-1,g;' current_config.pcmk > www-1.pcmk
 ```
 
 Jetzt bearbeiten wir die aktuelle Konfiguration im `Edit-Mode` und fügen ganzen oben unseren neu generierten Teil hinzu.
@@ -195,7 +196,7 @@ Die Sortierung der einzelnen Resourcen wird von Pacemaker automatisch übernomme
 kann die Konfiguration gespeichert und geschlossen werden.
 
 + `crm conf edit`
-+ `:r www-2.pcmk`
++ `:r www-1.pcmk`
 + `:wq`
 
 Anschließend erstellen wir eine [Sandbox](#pacemaker-cluster-testen) und testen die neue Konfiguration. 
@@ -212,13 +213,13 @@ crm conf show > current_config.pcmk
 Anschließend können wir mit `sed` den zu löschenden Teil aus der Konfiguration entfernen.
 
 ```shell
-{ cat current_config.pcmk; echo; echo placeholder; } | sed '/^[[:space:]]/{H;d;}; x; /www-2/d;' > no_www-2.pcmk
+{ cat current_config.pcmk; echo; echo placeholder; } | sed '/^[[:space:]]/{H;d;}; x; /www-1/d;' > no_www-1.pcmk
 ```
 
 Mit Hilfe von `vimdiff` können wir überprüfen, ob das Entfernen erfolgreich war.
 
 ```shell
-vimdiff current_config.pcmk no_www-2.pcmk
+diff current_config.pcmk no_www-1.pcmk
 ```
 
 Jetzt bearbeiten wir die aktuelle Konfiguration im `Edit-Mode`, löschen den gesamten Inhalt und fügen die neu generierte
@@ -226,7 +227,7 @@ Konfiguration ein. Sobald alles erfolgreich hinterlegt wurde, kann die Konfigura
 
 + `crm conf edit`
 + `:%d`
-+ `:r no_www-2.pcmk`
++ `:r no_www-1.pcmk`
 + `:wq`
 
 Anschließend erstellen wir eine [Sandbox](#pacemaker-cluster-testen) und testen die neue Konfiguration. 
@@ -300,19 +301,19 @@ pcs resource relocate show
 ## Einzelne Ressource auf einen anderen Knoten umziehen
 
 ```shell
-crm resource move res_cnt_lxc_www-2 vm-host-1
+crm resource move res_cnt_lxc_www-1 vm-host-1
 ```
 
 Ggf. auch mit dem Tool `pcs` möglich
 
 ```shell
-pcs resource move res_cnt_lxc_www-2 vm-host-1
+pcs resource move res_cnt_lxc_www-1 vm-host-1
 ```
 
 Nachträglich die Bindung an den Knoten lösen
 
 ```shell
-crm resource unban res_cnt_lxc_www-2
+crm resource unban res_cnt_lxc_www-1
 ```
 
 ## Knoten im Cluster auf Standby setzen

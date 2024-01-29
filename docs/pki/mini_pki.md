@@ -51,7 +51,7 @@ Wichtig ist hier der `Common Name (CN)` im Subject. Der `CN` legt den Namen der 
 ```shell
 # Subject anpassen !
 openssl req -new -key 'root_ca_key.pem' -sha256 -out 'req_ca.csr' \
-   -subj "/C=DE/ST=Berlin/L=Berlin/O=Sciurus LAN/OU=Test/CN=Mini Root CA G1"
+   -subj "/C=DE/ST=Berlin/L=Berlin/O=Domain Local/OU=Test/CN=Mini Root CA G1"
 ```
 
 Wir überprüfen gründlich den Inhalt vom Request.
@@ -113,8 +113,8 @@ subjectAltName           = @server_alt_names
 extendedKeyUsage         = serverAuth
 
 [ server_alt_names ]
-DNS.1 = test-1.example.com
-DNS.2 = test.example.com
+DNS.1 = test-1.example.local
+DNS.2 = test.example.local
 ```
 
 Anschließend generieren wir einen weiteren privaten Schlüssel für das Server-Zertifikat.
@@ -138,7 +138,7 @@ an den das Zertifikat ausgestellt werden soll.
 
 ```shell
 openssl req -new -key 'server_key.pem' -sha256 -out 'req_server.csr' \
-    -subj '/C=DE/ST=Berlin/L=Berlin/O=Example COM/OU=Test/CN=test-1.example.com'
+    -subj '/C=DE/ST=Berlin/L=Berlin/O=example.local/OU=Test/CN=test-1.example.local'
 ```
 
 Wir überprüfen gründlich den Inhalt vom Request.
