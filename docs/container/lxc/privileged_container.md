@@ -11,8 +11,6 @@ als auch außerhalb des Containers die gleiche UID 0 besitzen.
 | __User__ | __Container-UID__ | __Host-UID__ |
 |----------|-------------------|--------------|
 | root     | 0                 | 0            |
-//container/lxc/privileged_container
-
 
 
 Es ist empfehlenswert einen privilegierten Container nur im Ausnahmezustand zu erstellen. Ein Anwendungsfall wäre z.Bsp.
