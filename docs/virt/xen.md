@@ -1,13 +1,19 @@
-# Installation und Konfiguration
+# Xen - Installation und Konfiguration
 
 [TOC]
+
+## Einleitung
+
+**Xen** ist eine Open-Source-Virtualisierungstechnologie, die es ermöglicht, mehrere Betriebssysteme gleichzeitig auf einem einzigen physischen Server zu betreiben. Sie nutzt eine Hypervisor-Architektur, um Ressourcen effizient zwischen virtuellen Maschinen (VMs) zu teilen und zu verwalten. Xen ermöglicht Hochleistungs-Virtualisierung mit geringem Overhead, indem es direkten Zugriff auf die Hardware bietet.
 
 ## Debian-Paket installieren
 
 Auf dem Host wird XEN mit
+
 ```shell
 apt install xen-system-amd64
 ```
+
 installiert.
 
 Damit XEN verwendet werden kann, muss die Datei `/etc/default/grub.d/xen.cfg`
@@ -56,6 +62,7 @@ fi
 ```
 
 Nun kann das Image gebaut werden:
+
 ```shell
 cd /etc/xen/pvgrub
 tar cf memdisk.tar grub.cfg
@@ -76,24 +83,28 @@ Zunächst richten wir mit LVM zwei Partitionen ein.
 Die erste Partition ist für den Swap, die zweite Partition
 ist die Root-Partition (`/`). Weitere Partitionen können bei Bedarf
 hinzugefügt werden (zum Beispiel für `/var`)
+
 ```shell
 lvcreate -L 15G -n xen-test-root vg0
 lvcreate -L 3G -n xen-test-swap vg0
 ```
 
 Anschließend werden die Partitionen entsprechend formatiert:
+
 ```shell
 mkfs.ext4 /dev/vg0/xen-test-root
 mkswap /dev/vg0/xen-test-swap
 ```
 
 Um Debian zu installieren, muss mindestens die Root-Partition eingehangen werden:
+
 ```shell
 mkdir -p /root/vm-x
 mount /dev/vg0/xen-test-root /root/vm-x
 ```
 
 und danach kann mit `debootstrap` Debian installiert werden:
+
 ```shell
 debootstrap \
     --include='ssh,vim,less,iputils-ping,locales' \
@@ -103,14 +114,15 @@ debootstrap \
 ```
 
 Wir kopieren vom Hostsystem den Ordner `/root/.ssh` mit
+
 ```shell
 cp -a /root/.ssh /root/vm-x/root/
 ```
 
 Weiterhin müssen folgende Dateien ggfs. angepasst werden:
 
-* `/root/vm-x/etc/hostname`
-* `/root/vm-x/etc/resolv.conf`
+- `/root/vm-x/etc/hostname`
+- `/root/vm-x/etc/resolv.conf`
 
 Zum automatischen Einhängen der Dateisysteme beim Booten muss die Datei
 `/root/vm-x/etc/fstab` erstellt werden.
@@ -139,22 +151,26 @@ iface eth0 inet dhcp
 ```
 
 Nun wechseln wir mit `chroot` in das künftige Gastsystem:
+
 ```shell
 chroot /root/vm-x/ /bin/bash
 ```
 
 um die Spracheinstellungen vorzunehmen:
+
 ```shell
 dpkg-reconfigure locales # de_DE.UTF-8 und en_US.UTF-8 (default) einstellen
 ```
 
-Zusätzlich muss ein Passwort für den Nutzer `root`  festgelegt werden:
+Zusätzlich muss ein Passwort für den Nutzer `root` festgelegt werden:
+
 ```shell
 passwd root
 ```
 
 Mit `exit` können wir nun die `chroot`-Umgebung verlassen und anschließend
 muss das Dateisystem ausgehangen werden:
+
 ```shell
 umount /root/vm-x
 ```
@@ -203,11 +219,13 @@ on_crash    = 'restart'
 ```
 
 Nun kann das Gast-System mit
+
 ```shell
 xl create /etc/xen/xen-test.conf
 ```
 
 gestartet und mit
+
 ```shell
 xl console xen-test
 ```
@@ -216,13 +234,13 @@ kann der Bootvorgang verfolgt werden. Erscheint ein Login-Prompt,
 war das booten erfolgreich. Anderenfalls kann man mit ++control+"]"++
 die Konsole generell verlassen werden.
 
-
 ### Kernel und Grub einrichten
 
 Wir wollen nun erreichen, dass das Gast-System mit einem eigenen Kernel arbeitet.
 Damit machen wir uns unabhängig vom Host-System und können den Kernel konfigurieren.
 
 Zunächst melden wir uns mit der Konsole am Gast-System mit
+
 ```shell
 xl console xen-test
 ```
@@ -235,6 +253,7 @@ apt install linux-image-amd64 grub2
 
 Um ein Grub-Menü zu erstellen, muss die Datei `/etc/default/grub` bearbeitet werden
 und folgender Eintrag zur Datei hinzugefügt werden:
+
 ```
 # Boot Loader Specification (BLS)
 # Populate the bootloader's menu entries.
@@ -242,12 +261,14 @@ GRUB_ENABLE_BLSCFG=true
 ```
 
 Nun kann das Grub-Menü mit
+
 ```shell
 update-grub
 ```
 
 erstellt werden. Die angezeigten Warnungen können hierbei ignoriert werden.
 Das Gastsystem muss nun mit
+
 ```shell
 shutdown -h now
 ```
@@ -265,9 +286,9 @@ kernel = '/etc/xen/pvgrub/grub-x86_64-xen.bin'
 gesetzt und die Zeile mit dem Parameter `ramdisk` entfernt.
 
 Das Gastsytem kann nun mit
+
 ```shell
 xl create /etc/xen/xen-test.conf
 ```
 
 gestartet werden und es kann überprüft werden, ob alles funktioniert.
-

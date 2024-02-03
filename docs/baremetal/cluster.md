@@ -1,9 +1,10 @@
-# Cluster Manager
+# Cluster Manager - Pacemaker & Corosync
 
 [TOC]
 
 ## Einleitung
-Für die Sicherstellung einer hochverfügbaren Serverlandschaft, wird __Corosync__ und __Pacemaker__ als Cluster Manager verwendet.
+
+Für die Sicherstellung einer hochverfügbaren Serverlandschaft, wird **Corosync** und **Pacemaker** als Cluster Manager verwendet.
 Mit Hilfe dieser Software, können Ressourcen wie z.B. virtuelle Maschinen, Linux Container, Floating IPs und DNS verwaltet werden.
 Im Falle einer Downtime sorgt, der Cluster Manager dafür, dass die betroffenen Komponenten auf einem andren verfügbaren
 Server umgelagert werden.
@@ -179,7 +180,6 @@ rsc_defaults rsc-options: \
     da sonst Resourcen unkontrolliert ausgeschaltet werden könnten: <br>
     `/usr/sbin/crm_attribute --type crm_config --name maintenance-mode --update true`
 
-
 ## Pacemaker um eine Ressource erweitern
 
 Falls schon eine aktive Konfiguration vorhanden ist, können wir diese Konfiguration verwenden, um eine Resource zu erstellen.
@@ -195,15 +195,15 @@ Jetzt bearbeiten wir die aktuelle Konfiguration im `Edit-Mode` und fügen ganzen
 Die Sortierung der einzelnen Resourcen wird von Pacemaker automatisch übernommen. Sobald alles erfolgreich hinterlegt wurde,
 kann die Konfiguration gespeichert und geschlossen werden.
 
-+ `crm conf edit`
-+ `:r www-1.pcmk`
-+ `:wq`
+- `crm conf edit`
+- `:r www-1.pcmk`
+- `:wq`
 
-Anschließend erstellen wir eine [Sandbox](#pacemaker-cluster-testen) und testen die neue Konfiguration. 
+Anschließend erstellen wir eine [Sandbox](#pacemaker-cluster-testen) und testen die neue Konfiguration.
 
 ## Pacemaker Ressource entfernen
 
-Um eine Resource aus der bestehenden Konfiguration zu entfernen, erstellen wir zunächst eine lokale Kopie der Konfiguration. 
+Um eine Resource aus der bestehenden Konfiguration zu entfernen, erstellen wir zunächst eine lokale Kopie der Konfiguration.
 
 ```shell
 mkdir -p /tmp/pacemaker; cd /tmp/pacemaker
@@ -225,12 +225,12 @@ diff current_config.pcmk no_www-1.pcmk
 Jetzt bearbeiten wir die aktuelle Konfiguration im `Edit-Mode`, löschen den gesamten Inhalt und fügen die neu generierte
 Konfiguration ein. Sobald alles erfolgreich hinterlegt wurde, kann die Konfiguration gespeichert und geschlossen werden.
 
-+ `crm conf edit`
-+ `:%d`
-+ `:r no_www-1.pcmk`
-+ `:wq`
+- `crm conf edit`
+- `:%d`
+- `:r no_www-1.pcmk`
+- `:wq`
 
-Anschließend erstellen wir eine [Sandbox](#pacemaker-cluster-testen) und testen die neue Konfiguration. 
+Anschließend erstellen wir eine [Sandbox](#pacemaker-cluster-testen) und testen die neue Konfiguration.
 
 ## Pacemaker Cluster testen
 
@@ -244,48 +244,58 @@ rm /var/run/resource-agents/*
 
 Jetzt überprüfen wir die Pacemaker Resourcen.
 
-`-C` löscht aktuelle Zustände, `-R` prüft alle Resourcen neu. 
+`-C` löscht aktuelle Zustände, `-R` prüft alle Resourcen neu.
+
 ```shell
 crm_resource -C
 crm_resource -R
 ```
+
 Anschließend warten wir, bis alle Resourcen geprüft wurden.
 
 Um sicherzustellen, dass Resourcen nicht fehlerhaft verschoben werden, starten wir Pacemaker auf allen Knoten neu.
+
 ```shell
 service pacemaker stop
 sleep 1
 service pacemaker start
 service pacemaker status
 ```
+
 Anschließend warten wir erneut, bis alle Resourcen geprüft wurden.
 
 Nun können wir auf einem belieben Knoten die Sandbox erstellen
+
 ```shell
 crm_shadow --create test_sandbox --force
 ```
 
 Innerhalb der Sandbox stoppen wir den maintenance mode
+
 ```shell
 /usr/sbin/crm_attribute --type crm_config --name maintenance-mode --update false
 ```
 
 Jetzt können wir die Simulation starten, um das Verhalten vom Cluster vorhersagen zu können.
+
 ```shell
 crm_simulate -Ls
 ```
+
 Das Feld `Transition Summary:` gibt an, wie sich das Cluster produktiv verhalten würde.
 
 ### Sandbox ausführen/verwerfen
 
 Wenn wir mit dem Zustand der Sandbox zufrieden sind, können wir das Cluster in Betrieb nehmen. Damit wird das Cluster
 online gesetzt und alle Änderungen werden durchgeführt.
+
 ```shell
 crm_shadow --commit test_sandbox --force
 ```
 
 Sollte der Zustand der Sandbox den Erwartungen nicht entsprechen, kann die Sandbox gelöscht und alle Änderung verworfen werden.
 Dadurch bleibt das Cluster weiterhin im maintenance mode.
+
 ```shell
 crm_shadow --delete test_sandbox --force
 ```
@@ -293,10 +303,10 @@ crm_shadow --delete test_sandbox --force
 ### Cluster prüfen
 
 Sobald das Cluster online ist, kann geprüft werden, ob alle Resourcen vom Pacmaker korrekt gestartet werden.
+
 ```shell
 pcs resource relocate show
 ```
-
 
 ## Einzelne Ressource auf einen anderen Knoten umziehen
 
