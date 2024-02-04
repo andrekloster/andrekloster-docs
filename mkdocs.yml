@@ -44,6 +44,7 @@ nav:
           - Docker: "container/docker.md"
           - Kubernetes:
               - "container/kubernetes/setup_k3s.md"
+              - "container/kubernetes/deployment_with_ingress.md"
           - Xen: "virt/xen.md"
   - IaC:
       - Puppet:

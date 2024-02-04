@@ -1,5 +1,4 @@
 # Kubernetes - K3s
-
 ## Einleitung
 **Kubernetes** ist eine Open-Source-Plattform zur Automatisierung der Bereitstellung, Skalierung und Verwaltung von 
 containerisierten Anwendungen. Es ermöglicht es Benutzern, Cluster von Hosts, die Container ausführen, zu verwalten 
@@ -39,4 +38,3 @@ INSTALL_K3S_VERSION="v1.28.1+k3s1" \
   --tls-san=10.42.1.20 \
   --tls-san=10.42.3.20" sh -
 ```
-
