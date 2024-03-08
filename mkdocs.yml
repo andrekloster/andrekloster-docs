@@ -43,8 +43,20 @@ nav:
               - "container/lxc/create_with_proxy.md"
           - Docker: "container/docker.md"
           - Kubernetes:
-              - "container/kubernetes/setup_k3s.md"
+              - "container/kubernetes/architektur.md"
+              - "container/kubernetes/kubeadm_install.md"
+              - "container/kubernetes/k3s_install.md"
+              - "container/kubernetes/registry.md"
+              - "container/kubernetes/ingress.md"
+              - "container/kubernetes/cert_manager.md"
+              - "container/kubernetes/metrics_server.md"
+              - "container/kubernetes/longhorn.md"
+              - "container/kubernetes/nfs.md"
               - "container/kubernetes/deployment_with_ingress.md"
+              - "container/kubernetes/argocd.md"
+              - "container/kubernetes/grafana_prometheus.md"
+              - "container/kubernetes/jenkins.md"
+          - KVM: "virt/kvm.md"
           - Xen: "virt/xen.md"
   - IaC:
       - Puppet:

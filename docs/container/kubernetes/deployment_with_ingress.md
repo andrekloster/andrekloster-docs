@@ -6,7 +6,7 @@ Zusätzlich wird diese Applikation mithilfe von Ingress über Port 80 erreichbar
 
 ## Voraussetzungen
 Es wird vorausgesetzt, dass ein Kubernetes Cluster inkl. Ingress-Controller und externer LoadBalancer IP vorhanden ist.
-Die Installation eines solchen Cluster wird [hier](setup_k3s.md) beschrieben. Ebenso wird davon ausgegangen, dass 
+Die Installation eines solchen Cluster wird [hier](k3s_install.md) beschrieben. Ebenso wird davon ausgegangen, dass 
 die Beispiel-Applikation als Container Image gebaut und z.B. in der
 [Docker Hub Registry veröffentlich wurde](https://hub.docker.com/repository/docker/5470/test-color-app/general).
 
